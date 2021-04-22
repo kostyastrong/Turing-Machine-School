@@ -43,7 +43,7 @@ void MainWindow::on_newMachine_clicked()
 
     QString matrix[qAll][setCanBe.size() + 1];
     for (int i = 0; i < qAll; ++i) {
-
+        ui->showMeWhatYouGot
     }
 
 }

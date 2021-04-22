@@ -138,7 +138,7 @@
      <string>Жми, екарный бабай!</string>
     </property>
    </widget>
-   <widget class="QTableWidget" name="tableWidget">
+   <widget class="QTableWidget" name="showMeWhatYouGot">
     <property name="geometry">
      <rect>
       <x>10</x>
