@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include <set>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -17,8 +18,14 @@ public:
 
 private slots:
     void on_newMachine_clicked();
+    void EraseAll();
+
+    void on_nextAction_clicked();
+
+    void on_pushButton_clicked();
 
 private:
     Ui::MainWindow *ui;
 };
+
 #endif // MAINWINDOW_H

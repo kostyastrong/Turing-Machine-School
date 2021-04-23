@@ -1,10 +1,8 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "common.h"
 #include <QDebug>
-#include <iostream>
-#include <cstdlib>
-#include <set>
-#include <map>
+
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -19,34 +17,65 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+void MainWindow::EraseAll() {
+    ui->states->setRowCount(0);
+    ui->states->setColumnCount(0);
+    ui->showMeWhatYouGot->setColumnCount(0);
+    ui->showMeWhatYouGot->setRowCount(0);
+}
 
 void MainWindow::on_newMachine_clicked()
 {
-    QString defString = ui->defaultString->text();
-    QString canBe = ui->validChars->text();
+    EraseAll();
+    defString = ui->defaultString->text();
+    canBe = ui->validChars->text();
 
-    std::set<QChar> setCanBe = {'_'};
+
     for (QChar i : canBe) {
         if (i != ' ') {
             setCanBe.insert(i);
         }
     }
 
-    std::map<QChar, int> mapCanBe;
+
     int ind = 1;
     for (QChar i : setCanBe) {
         mapCanBe[i] = ind++;
     }
 
-    int qAll = ui->numberStates->text().toInt();
+    qAll = ui->numberStates->text().toInt();
     std::cout << defString.toStdString() << ' ' << qAll << std::endl;
 
-    QString matrix[qAll][setCanBe.size() + 1];
+    matrix.resize(qAll);
     for (int i = 0; i < qAll; ++i) {
-        ui->showMeWhatYouGot->insertRow(0);
+        matrix[i].resize(setCanBe.size());
     }
-    for (int i = 0; i < mapCanBe.size(); ++i) {
-        ui->showMeWhatYouGot->insertColumn(0);
-    }
+    ui->states->setRowCount(qAll);
+    ui->states->setColumnCount(setCanBe.size());
 
+    QStringList forLabels;
+    for (QChar i : setCanBe) {
+        forLabels.append(QString(i));
+    }
+    ui->states->setHorizontalHeaderLabels(forLabels);
+
+    ui->showMeWhatYouGot->insertRow(0);
+    ui->showMeWhatYouGot->setColumnCount(1000);
+}
+
+void nextOper() {
+    ++oper;
+
+}
+void MainWindow::on_nextAction_clicked()
+{
+}
+
+void MainWindow::on_pushButton_clicked()
+{
+    for (int i = 0; i < qAll; ++i) {
+        for (int j = 0; j < setCanBe.size(); ++j) {
+
+        }
+    }
 }
