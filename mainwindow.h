@@ -31,8 +31,11 @@ private slots:
 
     void on_autoComplete_clicked();
 
+    void on_pushButton_2_clicked();
+
 private:
     Ui::MainWindow *ui;
+    QTimer *timer;
 };
 
 #endif // MAINWINDOW_H

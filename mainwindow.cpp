@@ -3,6 +3,7 @@
 #include "common.h"
 #include <QDebug>
 #include <QThread>
+#include <QTimer>
 #include <iostream>
 
 
@@ -24,6 +25,7 @@ void MainWindow::EraseAll() {
     ui->states->setColumnCount(0);
     ui->showMeWhatYouGot->setColumnCount(0);
     ui->showMeWhatYouGot->setRowCount(0);
+    bg = ui->showMeWhatYouGot->palette().background().color();
 
     oper = 0;
     ind = 0;
@@ -87,15 +89,15 @@ void MainWindow::on_newMachine_clicked()
 
     for (int i = 0; i < defString.size(); ++i) {
         insertChar(defString[i], indAdd + i);
-        ui->showMeWhatYouGot->item(0, indAdd + i)->setBackground(Qt::gray);
+        ui->showMeWhatYouGot->item(0, indAdd + i)->setBackground(bg);
     }
     for (int i = 0; i < indAdd; ++i) {
         insertChar('_', i);
-        ui->showMeWhatYouGot->item(0, i)->setBackground(Qt::gray);
+        ui->showMeWhatYouGot->item(0, i)->setBackground(bg);
     }
     for (int i = indAdd + defString.size(); i < showMeSize; ++i) {
         insertChar('_', i);
-        ui->showMeWhatYouGot->item(0, i)->setBackground(Qt::gray);
+        ui->showMeWhatYouGot->item(0, i)->setBackground(bg);
     }
     ui->showMeWhatYouGot->scrollToItem(ui->showMeWhatYouGot->item(0, lookAtMe));
     ui->showMeWhatYouGot->item(0, indAdd)->setBackground(Qt::darkCyan);
@@ -137,11 +139,11 @@ bool MainWindow::nextOper() {
         }
     }
     if (operNow[1] == '>') {
-        ui->showMeWhatYouGot->item(0, startOfWord + ind)->setBackground(Qt::gray);
+        ui->showMeWhatYouGot->item(0, startOfWord + ind)->setBackground(bg);
         ++ind;
         ++lookAtMe;
     } else if (operNow[1] == '<') {
-        ui->showMeWhatYouGot->item(0, startOfWord + ind)->setBackground(Qt::gray);
+        ui->showMeWhatYouGot->item(0, startOfWord + ind)->setBackground(bg);
         --ind;
         --lookAtMe;
     }
@@ -175,36 +177,38 @@ void MainWindow::on_nextAction_clicked()
 
 void MainWindow::on_pushButton_clicked()
 {
-    freopen("input.txt", "r", stdin);
+    /*freopen("input.txt", "r", stdin);
     for (int i = 0; i < qAll; ++i) {
         for (int j = 0; j < setCanBe.size(); ++j) {
             std::string x;
             std::cin >> x;
             matrix[i][j] = QString::fromStdString(x);
         }
-    }
-    /*for (int i = 0; i < qAll; ++i) {
+    }*/
+    for (int i = 0; i < qAll; ++i) {
         for (int j = 0; j < setCanBe.size(); ++j) {
             QTableWidgetItem* itemNow = ui->states->item(i, j);
             matrix[i][j] = itemNow->text();
         }
-    }*/
+    }
     for (int i = 0; i < qAll; ++i) {
         for (int j = 0; j < setCanBe.size(); ++j) {
             std::cout << matrix[i][j].toStdString() << ' ';
         }
         std::cout << std::endl;
     }
-
-
 }
 
 void MainWindow::on_autoComplete_clicked()
 {
-    for (;;) {
-        for (int i = 0; i < 1000000; ++i);
-        if (nextOper()) break;
-    }
-    finish = true;
+    timer = new QTimer();
+    timer->setInterval(100);
+    connect(timer, SIGNAL(timeout()), SLOT(nextOper()));
+    timer->start();
     std::cout << "Finish" << std::endl;
+}
+
+void MainWindow::on_pushButton_2_clicked()
+{
+    timer->stop();
 }

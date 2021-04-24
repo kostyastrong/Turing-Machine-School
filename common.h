@@ -8,6 +8,7 @@
 #include <QString>
 #include <QChar>
 #include <QVector>
+#include <QColor>
 
 int oper = 0;
 int ind = 0;
@@ -17,6 +18,8 @@ const int showMeSize = 1000;
 int startOfWord = 400;
 int stateNow = 0;
 bool finish = false;
+QColor bg;
+
 
 QVector<QVector<QString>> matrix;
 QString defString;
