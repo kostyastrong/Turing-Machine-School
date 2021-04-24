@@ -18,11 +18,18 @@ public:
 
 private slots:
     void on_newMachine_clicked();
+
     void EraseAll();
 
     void on_nextAction_clicked();
 
     void on_pushButton_clicked();
+
+    bool nextOper();
+
+    void insertChar(QChar a, int indOfChar);
+
+    void on_autoComplete_clicked();
 
 private:
     Ui::MainWindow *ui;

@@ -11,7 +11,12 @@
 
 int oper = 0;
 int ind = 0;
+const int indAdd = 400;
+int lookAtMe = indAdd + 6;
+const int showMeSize = 1000;
+int startOfWord = 400;
 int stateNow = 0;
+bool finish = false;
 
 QVector<QVector<QString>> matrix;
 QString defString;
