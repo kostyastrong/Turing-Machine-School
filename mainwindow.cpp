@@ -161,6 +161,9 @@ bool MainWindow::nextOper() {
     }
 
     if (operNow.back() == '!') {
+        std::cout << "Finish" << std::endl;
+        finish = 1;
+        timer->stop();
         return 1;
     }
     return 0;
@@ -172,7 +175,7 @@ void MainWindow::on_nextAction_clicked()
         std::cout << "Finish" << std::endl;
         return;
     }
-    finish = nextOper();
+    nextOper();
 }
 
 void MainWindow::on_pushButton_clicked()
@@ -201,11 +204,15 @@ void MainWindow::on_pushButton_clicked()
 
 void MainWindow::on_autoComplete_clicked()
 {
+    if (finish) {
+        std::cout << "Finish" << std::endl;
+        return;
+    }
+
     timer = new QTimer();
     timer->setInterval(100);
     connect(timer, SIGNAL(timeout()), SLOT(nextOper()));
     timer->start();
-    std::cout << "Finish" << std::endl;
 }
 
 void MainWindow::on_pushButton_2_clicked()
